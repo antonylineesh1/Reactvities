@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import "./App.css";
-import { cars } from "./demo";
-import { CarItem } from "./CarItem";
+import { CarItem } from "../../CarItem";
 import axios from "axios";
 import { Header, Icon, List } from "semantic-ui-react";
 
