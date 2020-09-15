@@ -3,16 +3,23 @@ import logo from "./logo.svg";
 import { CarItem } from "../../CarItem";
 import axios from "axios";
 import { Header, Icon, List } from "semantic-ui-react";
+import { IActivity } from "../models/IActivity";
+
+interface IState {
+  activities: IActivity[];
+}
 
 class App extends Component {
-  state = {
-    values: [],
+  readonly state: IState = {
+    activities: [],
   };
-  componentDidMount() {
-    axios.get("http://localhost:5000/api/values").then((response) => {
-      
-      this.setState({ values: response.data });
+
+  componentDidMount() 
+  {
+    axios.get<IActivity[]>("http://localhost:5000/api/activities").then((response) => {
+      this.setState({ activities: response.data });
     });
+
   }
   render() {
     return (
@@ -22,8 +29,8 @@ class App extends Component {
           <Header.Content>reactivities</Header.Content>
         </Header>
         <List>
-          {this.state.values.map((value: any) => (
-            <List.Item key={value.id}>{value.name}</List.Item>
+          {this.state.activities.map((value) => (
+            <List.Item key={value.id}>{value.title}</List.Item>
           ))}
         </List>
 
