@@ -2,14 +2,15 @@ import React from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
 
-interface ISomeAnotherInterFace 
-{
+interface ISomeAnotherInterFace {
   activities: IActivity[];
-  selectActivity:(id:string)=>void
+  selectActivity: (id: string) => void;
+  deleteActivity: (activity: IActivity) => void;
 }
 export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
   activities,
-  selectActivity
+  selectActivity,
+  deleteActivity,
 }) => {
   return (
     <Segment clearing>
@@ -26,7 +27,18 @@ export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
                 </div>
               </Item.Description>
               <Item.Extra>
-                <Button floated="right" content="View" color="blue" onClick={()=>selectActivity(activity.id)} />
+                <Button
+                  floated="right"
+                  content="Delete"
+                  color="red"
+                  onClick={() => deleteActivity(activity)}
+                />
+                <Button
+                  floated="right"
+                  content="View"
+                  color="blue"
+                  onClick={() => selectActivity(activity.id)}
+                />
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>
