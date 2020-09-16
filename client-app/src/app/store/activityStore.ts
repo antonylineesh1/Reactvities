@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, computed, observable } from "mobx";
 import { createContext } from "react";
 import agent from "../api/agent";
 import { IActivity } from "../models/IActivity";
@@ -9,9 +9,10 @@ class ActivityStore {
   @observable editMode = false;
   @observable selectedActivity: IActivity | undefined;
   @observable submitting=false;
+  @observable activityRegistry=new Map();
 
   @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activities.find((actv) => actv.id === id);
+    this.selectedActivity = this.activityRegistry.get(id);
     this.editMode = false;
   };
 
@@ -23,7 +24,8 @@ class ActivityStore {
       const activities = await agent.Activities.list();
       activities.forEach((activity) => {
         activity.date = activity.date.split(".")[0];
-        this.activities.push(activity);
+        // this.activities.push(activity);
+        this.activityRegistry.set(activity.id,activity);
       });
       this.loadingInitial = false;
     }
@@ -39,7 +41,8 @@ class ActivityStore {
     try {
         
         await agent.Activities.create(activity);
-        this.activities.push(activity);
+        // this.activities.push(activity);
+        this.activityRegistry.set(activity.id,activity);
         this.selectedActivity=activity;
         this.editMode=false;
         this.submitting=false; 
@@ -54,8 +57,14 @@ class ActivityStore {
   @action openCreateForm= ()=>{
     this.editMode=true;
     this.selectedActivity=undefined;
-    
+
   }
+
+  @computed get activitiesByDate()
+  {
+        return Array.from(this.activityRegistry.values()).sort((a,b)=>Date.parse(a.date)-Date.parse(b.date));
+  }
+
 }
 
 export default createContext(new ActivityStore());

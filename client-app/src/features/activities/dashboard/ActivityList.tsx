@@ -16,12 +16,12 @@ const ActivityList: React.FC<ISomeAnotherInterFace> = ({
 }) => {
 
   const activityStore=useContext(ActivityStore);
-  const { selectActivity,activities }=activityStore;
+  const { selectActivity,activitiesByDate }=activityStore;
 
   return (
     <Segment clearing>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>
