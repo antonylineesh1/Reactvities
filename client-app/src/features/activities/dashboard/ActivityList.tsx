@@ -33,7 +33,7 @@ export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
               <Item.Extra>
                 <Button
                   name={activity.id}                  
-                  loading={ target==activity.id && submitting}
+                  loading={ target===activity.id && submitting}
                   floated="right"
                   content="Delete"
                   color="red"
