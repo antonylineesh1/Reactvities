@@ -8,7 +8,7 @@ import React, {
 import { Container } from "semantic-ui-react";
 import { IActivity } from "../models/IActivity";
 import { Nav } from "../../features/nav/Nav";
-import { ActivityDashboard } from "../../features/activities/dashboard/ActivityDashboard";
+import  ActivityDashboard  from "../../features/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
 import { LoadingComponent } from "./LoadingComponent";
 import ActivityStore from "../store/activityStore";
@@ -91,8 +91,6 @@ const App = () => {
         <ActivityDashboard
           activities={activityStore.activities}
           selectActivity={handleSelectActivity}
-          selectedActivity={selectedActivity}
-          editMode={editMode}
           setEditMode={setEditMode}
           setSelectedActivity={setSelectedActivity}
           createActivity={handleCreateActivity}

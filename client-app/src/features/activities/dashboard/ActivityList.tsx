@@ -1,22 +1,23 @@
 import { observer } from "mobx-react-lite";
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useContext } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
+import  ActivityStore  from "../../../app/store/activityStore";
 
 interface ISomeAnotherInterFace {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
   deleteActivity: (event:SyntheticEvent<HTMLButtonElement>,activity: IActivity) => void;
   submitting:boolean;
   target:string;
 }
-export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
-  activities,
-  selectActivity,
+const ActivityList: React.FC<ISomeAnotherInterFace> = ({
   deleteActivity,
   submitting,
   target
 }) => {
+
+  const activityStore=useContext(ActivityStore);
+  const { selectActivity,activities }=activityStore;
+
   return (
     <Segment clearing>
       <Item.Group divided>

@@ -6,6 +6,15 @@ import { IActivity } from "../models/IActivity";
 class ActivityStore {
   @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
+  @observable editMode=false;
+  @observable selectedActivity:IActivity|undefined;
+
+
+  @action selectActivity=(id:string)=>
+  {
+   this.selectedActivity=this.activities.find(actv=>actv.id===id);
+   this.editMode=false;     
+  }
 
   @action loadActivities = () => {
     this.loadingInitial = true;
@@ -21,6 +30,8 @@ class ActivityStore {
         this.loadingInitial = false;
       });
   };
+
+
 }
 
 export default createContext(new ActivityStore());
