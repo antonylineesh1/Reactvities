@@ -9,6 +9,16 @@ const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity,setSelectedActivity]=useState<IActivity|null>(null);
   const [editMode,setEditMode]=useState(false);
+
+
+  useEffect(() => {
+    axios
+      .get<IActivity[]>("http://localhost:5000/api/activities")
+      .then((response) => {
+        setActivities(response.data);
+      });
+  }, []);
+
   
   const handleSelectActivity=(id:string)=>{
     setSelectedActivity(activities.filter(a=>a.id===id)[0])
@@ -18,13 +28,8 @@ const App = () => {
     setEditMode(true);
     setSelectedActivity(null);    
   }
-  useEffect(() => {
-    axios
-      .get<IActivity[]>("http://localhost:5000/api/activities")
-      .then((response) => {
-        setActivities(response.data);
-      });
-  }, []);
+
+
 
   return (
     <Fragment>
