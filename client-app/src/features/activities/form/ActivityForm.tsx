@@ -41,7 +41,7 @@ export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:inti
 
     const handleSubmit=()=>
     {
-        if(activity.id.length ==0)
+        if(activity.id.length ===0)
         {
             let newActivity={
                 ...activity,
@@ -53,7 +53,6 @@ export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:inti
         {
             editActivity(activity);
         }
-        console.log(activity);
     }
 
     return (
