@@ -5,6 +5,7 @@ import { IActivity } from "../models/IActivity";
 import { Nav } from "../../features/nav/Nav";
 import { ActivityDashboard } from "../../features/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
+import { LoadingComponent } from "./LoadingComponent";
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -12,6 +13,7 @@ const App = () => {
     null
   );
   const [editMode, setEditMode] = useState(false);
+  const [loading,setLoading]=useState(true);
 
   useEffect(() => {
     agent.Activities.list().then((response) => {
@@ -22,6 +24,8 @@ const App = () => {
         formattedActivities.push(activity);
       });
       setActivities(formattedActivities);
+    }).then(()=>{
+      setLoading(false);
     });
   }, []);
 
@@ -59,6 +63,8 @@ const App = () => {
     });
   };
 
+  if(loading)
+    return <LoadingComponent content="Loading activities"/>
   return (
     <Fragment>
       <Nav openCreateForm={openCreateForm} />
