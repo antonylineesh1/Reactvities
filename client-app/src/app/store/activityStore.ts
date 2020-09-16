@@ -8,6 +8,7 @@ class ActivityStore {
   @observable loadingInitial = false;
   @observable editMode = false;
   @observable selectedActivity: IActivity | undefined;
+  @observable submitting=false;
 
   @action selectActivity = (id: string) => {
     this.selectedActivity = this.activities.find((actv) => actv.id === id);
@@ -31,8 +32,30 @@ class ActivityStore {
       console.log(error);
       this.loadingInitial = false;
     }
-    
   };
+
+  @action createActivity= async (activity:IActivity)=>{
+    this.submitting=true;
+    try {
+        
+        await agent.Activities.create(activity);
+        this.activities.push(activity);
+        this.selectedActivity=activity;
+        this.editMode=false;
+        this.submitting=false; 
+
+    } catch (error) {
+        console.log(error);
+        this.editMode=false;
+        this.submitting=false; 
+
+    }
+  }
+  @action openCreateForm= ()=>{
+    this.editMode=true;
+    this.selectedActivity=undefined;
+    
+  }
 }
 
 export default createContext(new ActivityStore());

@@ -86,7 +86,7 @@ const App = () => {
   if (activityStore.loadingInitial) return <LoadingComponent content="Loading activities" />;
   return (
     <Fragment>
-      <Nav openCreateForm={openCreateForm} />
+      <Nav />
       <Container style={{ marginTop: "7em" }}>
         <ActivityDashboard
           activities={activityStore.activities}
