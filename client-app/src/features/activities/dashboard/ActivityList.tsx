@@ -6,11 +6,13 @@ interface ISomeAnotherInterFace {
   activities: IActivity[];
   selectActivity: (id: string) => void;
   deleteActivity: (activity: IActivity) => void;
+  submitting:boolean
 }
 export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
   activities,
   selectActivity,
   deleteActivity,
+  submitting
 }) => {
   return (
     <Segment clearing>
@@ -28,6 +30,7 @@ export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
               </Item.Description>
               <Item.Extra>
                 <Button
+                loading={submitting}
                   floated="right"
                   content="Delete"
                   color="red"

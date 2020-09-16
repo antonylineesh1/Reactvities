@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import axios from "axios";
 import { Container } from "semantic-ui-react";
 import { IActivity } from "../models/IActivity";
 import { Nav } from "../../features/nav/Nav";
@@ -14,6 +13,7 @@ const App = () => {
   );
   const [editMode, setEditMode] = useState(false);
   const [loading,setLoading]=useState(true);
+  const [submitting,setSubmitting]=useState(false);
 
   useEffect(() => {
     agent.Activities.list().then((response) => {
@@ -40,13 +40,15 @@ const App = () => {
   };
 
   const handleCreateActivity = (activity: IActivity) => {
+    setSubmitting(true);
     agent.Activities.create(activity).then(() => {
       setActivities([...activities, activity]);
       setSelectedActivity(activity);
       setEditMode(false);
-    });
+    }).then(()=>{  setSubmitting(false); });
   };
   const handlerEditActivity = (activity: IActivity) => {
+    setSubmitting(true);
     agent.Activities.update(activity.id, activity).then(() => {
       setActivities([
         ...activities.filter((actv) => actv.id !== activity.id),
@@ -54,13 +56,14 @@ const App = () => {
       ]);
       setSelectedActivity(activity);
       setEditMode(false);
-    });
+    }).then(()=>{ setSubmitting(false);});
   };
 
   const handleDeleteActivity = (activity: IActivity) => {
+    setSubmitting(true);
     agent.Activities.delete(activity.id).then(() => {
       setActivities([...activities.filter((act) => act.id !== activity.id)]);
-    });
+    }).then(()=>{ setSubmitting(false); });
   };
 
   if(loading)
@@ -79,6 +82,7 @@ const App = () => {
           createActivity={handleCreateActivity}
           editActivity={handlerEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
         />
       </Container>
     </Fragment>
