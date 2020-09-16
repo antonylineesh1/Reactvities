@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { SyntheticEvent } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
@@ -54,3 +55,5 @@ export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
     </Segment>
   );
 };
+
+export default  observer(ActivityList);
