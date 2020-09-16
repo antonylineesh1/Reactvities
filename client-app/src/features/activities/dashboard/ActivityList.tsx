@@ -1,18 +1,20 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
 
 interface ISomeAnotherInterFace {
   activities: IActivity[];
   selectActivity: (id: string) => void;
-  deleteActivity: (activity: IActivity) => void;
-  submitting:boolean
+  deleteActivity: (event:SyntheticEvent<HTMLButtonElement>,activity: IActivity) => void;
+  submitting:boolean;
+  target:string;
 }
 export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
   activities,
   selectActivity,
   deleteActivity,
-  submitting
+  submitting,
+  target
 }) => {
   return (
     <Segment clearing>
@@ -30,11 +32,12 @@ export const ActivityList: React.FC<ISomeAnotherInterFace> = ({
               </Item.Description>
               <Item.Extra>
                 <Button
-                loading={submitting}
+                  name={activity.id}                  
+                  loading={ target==activity.id && submitting}
                   floated="right"
                   content="Delete"
                   color="red"
-                  onClick={() => deleteActivity(activity)}
+                  onClick={(event) => deleteActivity(event,activity)}
                 />
                 <Button
                   floated="right"

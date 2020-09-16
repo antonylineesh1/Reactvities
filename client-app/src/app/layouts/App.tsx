@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, SyntheticEvent, useEffect, useState } from "react";
 import { Container } from "semantic-ui-react";
 import { IActivity } from "../models/IActivity";
 import { Nav } from "../../features/nav/Nav";
@@ -14,6 +14,8 @@ const App = () => {
   const [editMode, setEditMode] = useState(false);
   const [loading,setLoading]=useState(true);
   const [submitting,setSubmitting]=useState(false);
+  const [target,setTarget]=useState('');
+
 
   useEffect(() => {
     agent.Activities.list().then((response) => {
@@ -59,8 +61,9 @@ const App = () => {
     }).then(()=>{ setSubmitting(false);});
   };
 
-  const handleDeleteActivity = (activity: IActivity) => {
+  const handleDeleteActivity = (event:SyntheticEvent<HTMLButtonElement>,activity: IActivity) => {
     setSubmitting(true);
+    setTarget(event.currentTarget.name);
     agent.Activities.delete(activity.id).then(() => {
       setActivities([...activities.filter((act) => act.id !== activity.id)]);
     }).then(()=>{ setSubmitting(false); });
@@ -83,6 +86,7 @@ const App = () => {
           editActivity={handlerEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
+          target={target}
         />
       </Container>
     </Fragment>
