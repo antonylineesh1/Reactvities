@@ -8,61 +8,72 @@ import agent from "../api/agent";
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
-  const [selectedActivity,setSelectedActivity]=useState<IActivity|null>(null);
-  const [editMode,setEditMode]=useState(false);
-
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    agent.Activities.list()
-      .then((response) => {
+    agent.Activities.list().then((response) => {
+      let formattedActivities: IActivity[] = [];
 
-        let formattedActivities:IActivity[]=[];
-
-        response.forEach(activity=>{
-          activity.date=activity.date.split('.')[0];
-          formattedActivities.push(activity);          
-        })
-        setActivities(formattedActivities);
+      response.forEach((activity) => {
+        activity.date = activity.date.split(".")[0];
+        formattedActivities.push(activity);
       });
+      setActivities(formattedActivities);
+    });
   }, []);
 
-
-  const handleSelectActivity=(id:string)=>{
-    setSelectedActivity(activities.filter(a=>a.id===id)[0]);
+  const handleSelectActivity = (id: string) => {
+    setSelectedActivity(activities.filter((a) => a.id === id)[0]);
     setEditMode(false);
-  }
+  };
 
-  const openCreateForm=()=>{
+  const openCreateForm = () => {
     setEditMode(true);
-    setSelectedActivity(null);    
-  }
+    setSelectedActivity(null);
+  };
 
   const handleCreateActivity = (activity: IActivity) => {
-    setActivities([...activities,activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
-
+    agent.Activities.create(activity).then(() => {
+      setActivities([...activities, activity]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
-  const handlerEditActivity=(activity:IActivity) => {
-    setActivities([...activities.filter(actv=>actv.id !== activity.id),activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
-  }
+  const handlerEditActivity = (activity: IActivity) => {
+    agent.Activities.update(activity.id, activity).then(() => {
+      setActivities([
+        ...activities.filter((actv) => actv.id !== activity.id),
+        activity,
+      ]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
+  };
 
-  const handleDeleteActivity=(activity:IActivity)=>{
-    setActivities([...activities.filter(act=>act.id !== activity.id)]);
-  }
+  const handleDeleteActivity = (activity: IActivity) => {
+    agent.Activities.delete(activity.id).then(() => {
+      setActivities([...activities.filter((act) => act.id !== activity.id)]);
+    });
+  };
 
   return (
     <Fragment>
-      <Nav openCreateForm={openCreateForm}/>
-      <Container style={{marginTop:'7em'}}>
-        <ActivityDashboard activities={activities} selectActivity={handleSelectActivity}
-         selectedActivity={selectedActivity} editMode={editMode} setEditMode={setEditMode} setSelectedActivity={setSelectedActivity}
-         createActivity={handleCreateActivity}
-         editActivity={handlerEditActivity}
-         deleteActivity={handleDeleteActivity}
-         />
+      <Nav openCreateForm={openCreateForm} />
+      <Container style={{ marginTop: "7em" }}>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          setSelectedActivity={setSelectedActivity}
+          createActivity={handleCreateActivity}
+          editActivity={handlerEditActivity}
+          deleteActivity={handleDeleteActivity}
+        />
       </Container>
     </Fragment>
   );
