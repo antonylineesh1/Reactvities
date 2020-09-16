@@ -7,13 +7,15 @@ import { ActivityList } from "./ActivityList";
 
 interface IProps {
   activities: IActivity[];
-  selectActivity:(id:string)=>void,
-  selectedActivity:IActivity|null,
-  editMode:boolean,
-  setEditMode:(editMode:boolean)=>void,
-  setSelectedActivity:(activity:IActivity|null)=>void
+  selectActivity:(id:string)=>void;
+  selectedActivity:IActivity|null;
+  editMode:boolean;
+  setEditMode:(editMode:boolean)=>void;
+  setSelectedActivity:(activity:IActivity|null)=>void;
+  createActivity:(activity:IActivity)=>void;
+  editActivity:(activity:IActivity)=>void;
 }
-export const ActivityDashboard: React.FC<IProps> = ({ activities,selectActivity,selectedActivity,editMode,setEditMode,setSelectedActivity }) => 
+export const ActivityDashboard: React.FC<IProps> = ({ activities,selectActivity,selectedActivity,editMode,setEditMode,setSelectedActivity,createActivity,editActivity }) => 
 {
   return (
     <Grid>
@@ -22,7 +24,7 @@ export const ActivityDashboard: React.FC<IProps> = ({ activities,selectActivity,
       </Grid.Column>
       <Grid.Column width={6}>
         { !editMode && selectedActivity && <ActivityDetails setEditMode={setEditMode} selectedActivity={selectedActivity} setSelectedActivity={setSelectedActivity}/>}
-        { editMode && <ActivityForm setEditMode={setEditMode} selectedActivity={selectedActivity}/>}
+        { editMode && <ActivityForm setEditMode={setEditMode} selectedActivity={selectedActivity} createActivity={createActivity} editActivity={editActivity}/>}
       </Grid.Column>
     </Grid>
   );

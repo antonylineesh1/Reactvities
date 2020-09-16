@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Form, Segment } from 'semantic-ui-react'
 import { IActivity } from '../../../app/models/IActivity'
+import {v4 as uuid} from 'uuid';
 
 interface IProps
 {
     setEditMode:(editMode:boolean)=>void;
     selectedActivity :IActivity|null;
+    createActivity:(activity:IActivity)=>void;
+    editActivity:(activity:IActivity)=>void;
 }
-export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:intializeFormState}) => {
+export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:intializeFormState,createActivity,editActivity}) => {
 
     const initializeForm=()=>{
 
@@ -38,6 +41,18 @@ export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:inti
 
     const handleSubmit=()=>
     {
+        if(activity.id.length ==0)
+        {
+            let newActivity={
+                ...activity,
+                id:uuid()
+            }
+            createActivity(newActivity);
+        }
+        else
+        {
+            editActivity(activity);
+        }
         console.log(activity);
     }
 
