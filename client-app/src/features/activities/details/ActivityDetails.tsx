@@ -10,7 +10,7 @@ interface IDetailParams
   id:string;
 }
 
-const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({match}) => {
+const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({match,history}) => {
   
 
   const activityStore=useContext(ActivityStore)
@@ -40,7 +40,7 @@ const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({match}) 
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button basic color="blue" content="Edit" onClick={()=>openEditForm(activity!.id)} loading={submitting} />
-          <Button basic color="grey" content="Cancel" onClick={cancelSelectedActivity}/>
+          <Button basic color="grey" content="Cancel" onClick={()=>history.push('/activities')}/>
         </Button.Group>
       </Card.Content>
     </Card>
