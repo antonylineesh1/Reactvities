@@ -14,8 +14,6 @@ const ActivityDashboard: React.FC = () => {
 
   const { editMode,selectedActivity }=activityStore;
 
-  debugger;
-
   return (
     <Grid>
       <Grid.Column width={10}>
