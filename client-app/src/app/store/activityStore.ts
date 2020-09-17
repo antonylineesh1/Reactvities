@@ -9,13 +9,13 @@ class ActivityStore {
   @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
   @observable editMode = false;
-  @observable selectedActivity: IActivity | undefined;
+  @observable activity: IActivity | undefined;
   @observable submitting=false;
   @observable activityRegistry=new Map();
   @observable target='';
 
   @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
+    this.activity = this.activityRegistry.get(id);
     this.editMode = false;
   };
 
@@ -54,7 +54,7 @@ class ActivityStore {
 
         runInAction('creating activity',()=>{
           this.activityRegistry.set(activity.id,activity);
-          this.selectedActivity=activity;
+          this.activity=activity;
           this.editMode=false;
           this.submitting=false; 
         });
@@ -72,7 +72,7 @@ class ActivityStore {
   }
   @action openCreateForm= ()=>{
     this.editMode=true;
-    this.selectedActivity=undefined;
+    this.activity=undefined;
 
   }
 
@@ -83,7 +83,7 @@ class ActivityStore {
       await agent.Activities.update(activity.id, activity);
       runInAction('edit actitivy',()=>{
         this.activityRegistry.set(activity.id,activity);
-        this.selectedActivity=activity;
+        this.activity=activity;
         this.editMode=false;            
         this.submitting=false;
       });
@@ -100,14 +100,14 @@ class ActivityStore {
 
   @action openEditForm=(id:string)=>{
 
-    this.selectedActivity=this.activityRegistry.get(id);
+    this.activity=this.activityRegistry.get(id);
     this.editMode=true;
     
   }
 
   @action cancelSelectedActivity=()=>{
 
-    this.selectedActivity=undefined;
+    this.activity=undefined;
   }
 
   @action cancelFormOpen=()=>{
@@ -137,6 +137,40 @@ class ActivityStore {
           this.submitting=false;
         });
       }
+  }
+
+  @action loadActivity= async ( id:string ) => {
+    
+    let activity=this.getActivity(id);
+
+    if(activity)
+    {
+        this.activity=activity;
+    }
+    else
+    {
+      this.loadingInitial=true;
+      try 
+      {
+
+        activity=await agent.Activities.details(id);
+        runInAction('load activity',()=>{
+          this.activity=activity;
+          this.loadingInitial=false;
+        })
+
+      } catch (error) {
+        runInAction('load activity error',()=>{
+          this.loadingInitial=false;
+          console.log(error);
+        })
+      }
+    }
+  }
+
+  getActivity=(id:string)=>{
+
+    return this.activityRegistry.get(id);
   }
 
   @computed get activitiesByDate()

@@ -12,7 +12,7 @@ const ActivityDashboard: React.FC = () => {
 
   const activityStore=useContext(ActivityStore);
 
-  const { editMode,selectedActivity }=activityStore;
+  const { editMode,activity }=activityStore;
 
   return (
     <Grid>
@@ -21,13 +21,13 @@ const ActivityDashboard: React.FC = () => {
       </Grid.Column>
       <Grid.Column width={6}>
         
-        {!editMode && selectedActivity && (
+        {!editMode && activity && (
           <ActivityDetails />
         )}
         {editMode && (
           <ActivityForm
-            key={(selectedActivity && selectedActivity.id) || 0}
-            selectedActivity={selectedActivity!}
+            key={( activity && activity.id) || 0}
+            selectedActivity={activity!}
           />
         )}
       </Grid.Column>
