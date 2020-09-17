@@ -6,11 +6,9 @@ import activityStore from '../../../app/store/activityStore';
 
 interface IProps
 {
-    setEditMode:(editMode:boolean)=>void;
     selectedActivity :IActivity|null;
-    editActivity:(activity:IActivity)=>void;
 }
-export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:intializeFormState,editActivity}) => {
+export const ActivityForm :React.FC<IProps>= ({selectedActivity:intializeFormState}) => {
 
     const initializeForm=()=>{
 
@@ -33,7 +31,7 @@ export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:inti
     const [activity,setActivity]=useState<IActivity>(initializeForm);
     
     const store=useContext(activityStore);
-    const { createActivity,submitting } =store;
+    const { createActivity,submitting,editActivity,cancelFormOpen } =store;
 
     const handleInputChange=(event:any)=>{
 
@@ -68,7 +66,7 @@ export const ActivityForm :React.FC<IProps>= ({setEditMode,selectedActivity:inti
                 <Form.Input placeholder='City' name='city' onChange={handleInputChange} value={activity.city}/>
                 <Form.Input placeholder='Venue' name='venue' onChange={handleInputChange} value={activity.venue}/>        
                 <Button loading={submitting} positive floated='right' type='submit' content='Submit'/>
-                <Button floated='right' type='button' content='Cancel' onClick={()=>setEditMode(false)}/>
+                <Button floated='right' type='button' content='Cancel' onClick={cancelFormOpen}/>
             </Form>
         </Segment>
     )

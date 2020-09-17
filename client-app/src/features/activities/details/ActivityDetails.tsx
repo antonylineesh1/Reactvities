@@ -4,18 +4,12 @@ import { Card, Image, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
 import ActivityStore from '../../../app/store/activityStore';
 
-interface IProps 
-{
-  setEditMode:(editMode:boolean)=>void;
-  setSelectedActivity:(activity:IActivity|null)=>void;
-  submitting:boolean;
-}
 
-const ActivityDetails: React.FC<IProps> = ({ setEditMode,setSelectedActivity,submitting }) => {
+const ActivityDetails: React.FC = () => {
   
   const activityStore=useContext(ActivityStore)
 
-  const { selectedActivity } =activityStore;
+  const { selectedActivity,openEditForm,cancelSelectedActivity,submitting } =activityStore;
   debugger;
 
   return (
@@ -34,8 +28,8 @@ const ActivityDetails: React.FC<IProps> = ({ setEditMode,setSelectedActivity,sub
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
-          <Button basic color="blue" content="Edit" onClick={()=>setEditMode(true)} loading={submitting} />
-          <Button basic color="grey" content="Cancel" onClick={()=>setSelectedActivity(null)}/>
+          <Button basic color="blue" content="Edit" onClick={()=>openEditForm(selectedActivity!.id)} loading={submitting} />
+          <Button basic color="grey" content="Cancel" onClick={cancelSelectedActivity}/>
         </Button.Group>
       </Card.Content>
     </Card>

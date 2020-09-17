@@ -30,43 +30,8 @@ const App = () => {
     activityStore.loadActivities();
   }, [activityStore]);
 
-  const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities.filter((a) => a.id === id)[0]);
-    setEditMode(false);
-  };
 
-  const openCreateForm = () => {
-    setEditMode(true);
-    setSelectedActivity(null);
-  };
 
-  const handleCreateActivity = (activity: IActivity) => {
-    setSubmitting(true);
-    agent.Activities.create(activity)
-      .then(() => {
-        setActivities([...activities, activity]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-      })
-      .then(() => {
-        setSubmitting(false);
-      });
-  };
-  const handlerEditActivity = (activity: IActivity) => {
-    setSubmitting(true);
-    agent.Activities.update(activity.id, activity)
-      .then(() => {
-        setActivities([
-          ...activities.filter((actv) => actv.id !== activity.id),
-          activity,
-        ]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-      })
-      .then(() => {
-        setSubmitting(false);
-      });
-  };
 
   const handleDeleteActivity = (
     event: SyntheticEvent<HTMLButtonElement>,
@@ -89,12 +54,7 @@ const App = () => {
       <Nav />
       <Container style={{ marginTop: "7em" }}>
         <ActivityDashboard
-          activities={activityStore.activities}
-          selectActivity={handleSelectActivity}
           setEditMode={setEditMode}
-          setSelectedActivity={setSelectedActivity}
-          createActivity={handleCreateActivity}
-          editActivity={handlerEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
           target={target}
