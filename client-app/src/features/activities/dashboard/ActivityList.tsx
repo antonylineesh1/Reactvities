@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import  ActivityStore  from "../../../app/store/activityStore";
 
@@ -35,7 +36,8 @@ const ActivityList: React.FC = () => {
                   floated="right"
                   content="View"
                   color="blue"
-                  onClick={() => selectActivity(activity.id)}
+                  as={NavLink}
+                  to={`/activity/${activity.id}`}
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>
