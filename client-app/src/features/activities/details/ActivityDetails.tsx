@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
+import { Link } from "react-router-dom";
 import { Card, Image, Button } from "semantic-ui-react";
 import { LoadingComponent } from "../../../app/layouts/LoadingComponent";
 import ActivityStore from '../../../app/store/activityStore';
@@ -15,7 +16,7 @@ const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({match,hi
 
   const activityStore=useContext(ActivityStore)
 
-  const { activity,openEditForm,cancelSelectedActivity,submitting,loadActivity,loadingInitial } =activityStore;
+  const { activity,submitting,loadActivity,loadingInitial } =activityStore;
 
   useEffect(()=>{
     loadActivity(match.params.id);
@@ -39,7 +40,7 @@ const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({match,hi
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
-          <Button basic color="blue" content="Edit" onClick={()=>openEditForm(activity!.id)} loading={submitting} />
+          <Button basic color="blue" content="Edit" loading={submitting} as={Link} to={`/manage/${activity!.id}`}/>
           <Button basic color="grey" content="Cancel" onClick={()=>history.push('/activities')}/>
         </Button.Group>
       </Card.Content>
