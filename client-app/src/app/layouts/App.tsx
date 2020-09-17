@@ -25,7 +25,7 @@ const App = () => {
       <Container style={{ marginTop: "7em" }}>
         <Route exact path="/" component={HomePage} />
         <Route  path="/activities" component={ActivityDashboard} />
-        <Route  path="/activity/:id" component={ActivityDetails} />
+        <Route exact  path="/activity/:id" component={ActivityDetails} />
         <Route exact path="/createForm" component={ActivityForm} />
       </Container>
     </Fragment>
