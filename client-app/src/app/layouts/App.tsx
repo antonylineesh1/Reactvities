@@ -1,9 +1,7 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Container } from "semantic-ui-react";
 import { Nav } from "../../features/nav/Nav";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { LoadingComponent } from "./LoadingComponent";
-import ActivityStore from "../store/activityStore";
 import { observer } from "mobx-react-lite";
 import { Route, RouteComponentProps, withRouter } from "react-router-dom";
 import { HomePage } from "../../features/home/HomePage";
@@ -12,7 +10,7 @@ import ActivityDetails from "../../features/activities/details/ActivityDetails";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
 
-  
+
   return (
     <Fragment>
       <Route exact path="/" component={HomePage} />
