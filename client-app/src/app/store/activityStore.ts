@@ -9,7 +9,7 @@ class ActivityStore {
   @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
   @observable editMode = false;
-  @observable activity: IActivity | undefined;
+  @observable activity: IActivity | undefined | null;
   @observable submitting=false;
   @observable activityRegistry=new Map();
   @observable target='';
@@ -166,6 +166,10 @@ class ActivityStore {
         })
       }
     }
+  }
+
+  @action clearActivity=()=>{
+    this.activity=null;
   }
 
   getActivity=(id:string)=>{

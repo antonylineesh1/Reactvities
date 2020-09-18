@@ -11,6 +11,7 @@ interface IDetailsParams {
 
 export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
   match,
+  history
 }) => {
   const store = useContext(activityStore);
   const {
@@ -20,31 +21,21 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
     cancelFormOpen,
     activity: intializeFormState,
     loadActivity,
+    clearActivity
   } = store;
 
   useEffect(() => {
-    if (match.params.id) {
+    if (match.params.id && activity.id.length == 0) {
       loadActivity(match.params.id).then(() => {
         intializeFormState && setActivity(intializeFormState);
       });
-    }
-  });
 
-  const initializeForm = () => {
-    if (intializeFormState) {
-      return intializeFormState;
-    } else {
-      return {
-        id: "",
-        title: "",
-        description: "",
-        category: "",
-        date: "",
-        city: "",
-        venue: "",
-      };
+      return (()=>{
+        clearActivity();
+      })
     }
-  };
+  },[loadActivity,match.params.id,intializeFormState]);
+
 
   const [activity, setActivity] = useState<IActivity>({
     id: "",
@@ -67,9 +58,14 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
         ...activity,
         id: uuid(),
       };
-      createActivity(newActivity);
-    } else {
+      createActivity(newActivity).then(()=>
+      {
+        history.push(`/activity/${newActivity.id}`);
+      });
+    } else 
+    {
       editActivity(activity);
+      history.push(`/activity/${activity.id}`);
     }
   };
 
