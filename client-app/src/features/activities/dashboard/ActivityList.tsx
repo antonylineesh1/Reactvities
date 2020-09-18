@@ -1,18 +1,13 @@
-import { group } from "console";
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { Item, Button, Label, Segment } from "semantic-ui-react";
+import { Item, Label } from "semantic-ui-react";
 import ActivityStore from "../../../app/store/activityStore";
-import { ActivityListItem } from "./ActivityListItem";
+import  ActivityListItem  from "./ActivityListItem";
 
 const ActivityList: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const {
     activitiesByDate,
-    submitting,
-    target,
-    deleteActivity,
   } = activityStore;
 
   return (

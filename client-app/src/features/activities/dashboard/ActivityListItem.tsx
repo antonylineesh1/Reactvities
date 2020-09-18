@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import { observer } from "mobx-react-lite";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { Item, Button, Label, Segment, Icon } from "semantic-ui-react";
+import { Item, Button, Segment, Icon } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
-import ActivityStore from "../../../app/store/activityStore";
 
-export const ActivityListItem: React.FC<{ activity: IActivity }> = ({
+const ActivityListItem: React.FC<{ activity: IActivity }> = ({
   activity,
-}) => {
-  const activityStore = useContext(ActivityStore);
-  const { submitting, target, deleteActivity } = activityStore;
+}) => 
+{  
 
   return (
     <Segment.Group>
@@ -43,3 +42,6 @@ export const ActivityListItem: React.FC<{ activity: IActivity }> = ({
     </Segment.Group>
   );
 };
+
+
+export default observer(ActivityListItem);
