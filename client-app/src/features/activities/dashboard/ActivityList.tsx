@@ -7,7 +7,7 @@ import  ActivityStore  from "../../../app/store/activityStore";
 const ActivityList: React.FC = () => {
 
   const activityStore=useContext(ActivityStore);
-  const { selectActivity,activitiesByDate,submitting,target,deleteActivity }=activityStore;
+  const { activitiesByDate,submitting,target,deleteActivity }=activityStore;
 
   return (
     <Segment clearing>

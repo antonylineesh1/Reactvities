@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Container, Menu } from "semantic-ui-react";
-import ActivityStore from "../../app/store/activityStore";
 
 
 export const Nav:React.FC = () => {
-
-  const activityStore=useContext(ActivityStore);
 
   return (
     <Menu fixed="top" inverted>

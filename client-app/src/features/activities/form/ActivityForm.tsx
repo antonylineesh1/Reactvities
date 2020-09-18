@@ -18,24 +18,10 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
     createActivity,
     submitting,
     editActivity,
-    cancelFormOpen,
     activity: intializeFormState,
     loadActivity,
     clearActivity
   } = store;
-
-  useEffect(() => {
-    if (match.params.id && activity.id.length == 0) {
-      loadActivity(match.params.id).then(() => {
-        intializeFormState && setActivity(intializeFormState);
-      });
-
-      return (()=>{
-        clearActivity();
-      })
-    }
-  },[loadActivity,match.params.id,intializeFormState]);
-
 
   const [activity, setActivity] = useState<IActivity>({
     id: "",
@@ -46,6 +32,22 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
     city: "",
     venue: "",
   });
+
+
+  useEffect(() => {
+    if (match.params.id && activity.id.length === 0) {
+      loadActivity(match.params.id).then(() => {
+        intializeFormState && setActivity(intializeFormState);
+      });
+
+      return (()=>{
+        clearActivity();
+      })
+    }
+  },[loadActivity,match.params.id,intializeFormState,activity.id.length,clearActivity]);
+
+
+
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
@@ -121,7 +123,7 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailsParams>> = ({
           floated="right"
           type="button"
           content="Cancel"
-          onClick={cancelFormOpen}
+          onClick={()=>{history.push('/activities')}}
         />
       </Form>
     </Segment>
