@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Button, Header, Item, Segment,Image } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/IActivity";
@@ -16,7 +17,7 @@ const activityImageTextStyle = {
 };
 
 
-export const ActivityDetailedHeader:React.FC<{activity:IActivity}> = ({activity}) => 
+const ActivityDetailedHeader:React.FC<{activity:IActivity}> = ({activity}) => 
 {
   return (
     <Segment.Group>
@@ -50,3 +51,5 @@ export const ActivityDetailedHeader:React.FC<{activity:IActivity}> = ({activity}
     </Segment.Group>
   );
 };
+
+export default observer(ActivityDetailedHeader);

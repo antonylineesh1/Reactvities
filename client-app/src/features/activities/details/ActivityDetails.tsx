@@ -6,8 +6,8 @@ import { Card, Image, Button, Grid } from "semantic-ui-react";
 import { LoadingComponent } from "../../../app/layouts/LoadingComponent";
 import ActivityStore from "../../../app/store/activityStore";
 import { ActivityDetailedChat } from "./ActivityDetailedChat";
-import { ActivityDetailedHeader } from "./ActivityDetailedHeader";
-import { ActivityDetailedInfo } from "./ActivityDetailedInfo";
+import  ActivityDetailedHeader  from "./ActivityDetailedHeader";
+import  ActivityDetailedInfo  from "./ActivityDetailedInfo";
 import { ActivityDetailedSidebar } from "./ActivityDetailedSidebar";
 
 interface IDetailParams {
@@ -33,7 +33,7 @@ const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({
     <Grid>
       <Grid.Column width={10}>
         <ActivityDetailedHeader activity={activity} />
-        <ActivityDetailedInfo />
+        <ActivityDetailedInfo activity={activity}/>
         <ActivityDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>
