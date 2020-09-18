@@ -1,12 +1,26 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Button, Container, Header, Segment,Image } from "semantic-ui-react";
 
 export const HomePage = () => {
-    return (
-        <Container style={{marginTop:'10px'}}>
-            <h1>This is home page</h1>
-            <h3>Go to <NavLink to='/activities'>actitivities</NavLink></h3> 
-        </Container>
-    )
-}
+  return (
+    <Segment inverted textAlign="center" vertical className="masthead">
+      <Container text>
+        <Header as="h1" inverted>
+          <Image
+            size="massive"
+            src="/assets/logo.png"
+            alt="logo"
+            style={{ marginBottom: 12 }}
+          />
+          
+          Reactivities
+        </Header>
+        <Header as="h2" inverted content="Welcome to Reactivities" />
+        <Button as={Link} to="/activities" size="huge" inverted>
+          Take me to the activities!
+        </Button>
+      </Container>
+    </Segment>
+  );
+};
