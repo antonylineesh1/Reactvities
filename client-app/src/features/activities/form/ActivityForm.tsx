@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
 
 import { Form as FinalForm, Field } from "react-final-form";
-import { TextInput } from "../../../app/common/form/TextInput";
+import  TextInput  from "../../../app/common/form/TextInput";
 
 interface DetailParams {
   id: string;
@@ -93,7 +93,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   name="title"
                   placeholder="Title"
                   value={activity.title}
-                  component={TextInput}          
+                  component={TextInput}
                 />
 
                 <Form.TextArea
@@ -135,6 +135,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   type="submit"
                   content="Submit"
                 />
+                
                 <Button
                   onClick={() => history.push("/activities")}
                   floated="right"
