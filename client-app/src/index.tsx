@@ -12,7 +12,7 @@ import ScrollToTop from './app/layout/ScrollToTop';
 import dateFnsLocalizer from 'react-widgets-date-fns';
 
 
-dateFnsLocalizer();
+new dateFnsLocalizer();
 
 export const history = createBrowserHistory();
 

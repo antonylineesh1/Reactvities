@@ -10,6 +10,7 @@ export const DateInput: React.FC<IProps> = ({
   width,
   placeholder,
   meta: { touched, error },
+  id=null,
   ...rest
 }) => {
   return (
