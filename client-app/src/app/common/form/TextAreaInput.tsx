@@ -20,14 +20,14 @@ const TextAreaInput : React.FC<IProps> = (
       }
 ) => {
     return (
-        <Form.Field error={touched && !!error} type={type} width={width}>
+    <Form.Field error={touched && !!error} type={type} width={width}>
         <textarea {...input} placeholder={placeholder} rows={rows} />
         {touched && error && (
           <Label basic color='red'>
             {error}
           </Label>
         )}
-      </Form.Field>
+    </Form.Field>
     )
 }
 
