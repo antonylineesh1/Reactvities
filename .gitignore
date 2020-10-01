@@ -1,6 +1,4 @@
-obj
 bin
-.vscode
-appsettings.json
-**.db
-node_modules/
+obj
+.DS_Store
+*.db

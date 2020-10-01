@@ -1,27 +1,27 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace DatingApp.API.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-
-        public ValuesController(DataContext dataContext)
+        private readonly DataContext _context;
+        public ValuesController(DataContext context)
         {
-            _dataContext = dataContext;
+            _context = context;
         }
+
         // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
-            var values= await _dataContext.Values.ToListAsync();            
+            var values = await _context.Values.ToListAsync();
             return Ok(values);
         }
 
@@ -29,7 +29,7 @@ namespace DatingApp.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
         {
-            var value= await _dataContext.Values.FindAsync(id);
+            var value = await _context.Values.FindAsync(id);
             return Ok(value);
         }
 
